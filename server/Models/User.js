@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   lname: {type: String, required: true,},
   password: {type: String, required: true,},
   email: {type: String, required: true,},
-  creationDate: {type:Date}
+  createon: {type:Date}
 })
-const userModel = mongoose.model('User', userSchema)
-module.exports=userModel
+const UserModel = mongoose.model('User', userSchema)
+module.exports=UserModel

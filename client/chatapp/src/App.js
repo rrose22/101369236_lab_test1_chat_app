@@ -1,23 +1,17 @@
+// App.js
+import React from 'react';
+import { Router, Route } from 'react-router-dom';
 import './App.css';
-import io from 'socket.io-client';
-import { useState } from 'react';
+import RegisterPage from './Components/RegisterPage';
+import LoginPage from './Components/LoginPage';
 
 function App() {
-  const [message, setMessage] = useState('');
-  const socket = io.connect("http://localhost:3000");
-
-  const sendMessage = () => {
-    // Emit "message" event with the message content
-    socket.emit("message", message);
-  }
-
   return (
     <div className="App">
-      <input placeholder='Message' value={message} onChange={(e) => setMessage(e.target.value)}></input>
-      <button onClick={sendMessage}>Send Message</button>
+     <a href="user/register">Register</a>
+     <a href="login/register">Login</a>
     </div>
- 
- );
+  );
 }
 
 export default App;

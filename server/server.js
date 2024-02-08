@@ -2,19 +2,11 @@ const mongoose = require('mongoose');
 const express = require('express');
 const socketIO = require('socket.io');
 const cors = require('cors');
-const userRoutes = require("./Routes/userRoute")
+const userRoutes = require("./Routes/userRoute.js")
 
 const SERVER_PORT = 3000;
 const CONNECTION_STRING = "mongodb+srv://admin:admin@cluster0.ktjqy7e.mongodb.net/?retryWrites=true&w=majority";
 
-// Connect to MongoDB
-mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.on('open', () => {
-  console.log('MongoDB is connected');
-});
-mongoose.connection.on('error', (err) => {
-  console.error(err.message);
-});
 
 
 const app = express();
@@ -23,22 +15,28 @@ app.use(express.json());
 app.use("/api/user", userRoutes)
 
 const server = app.listen(SERVER_PORT, () => {
+  try{
+    mongoose.connect(CONNECTION_STRING)
+    console.log('MongoDB is connected');
+  }catch(e){
+    console.log(e.message)
+  }
   console.log(`Server is running on port ${SERVER_PORT}`);
 });
 
 
 
-// Instantiate Socket.IO
-const serverIO = socketIO(server);
+// // Instantiate Socket.IO
+// const serverIO = socketIO(server);
 
-serverIO.on('connection', (socket) => {
-  console.log('Socket connection made', socket.id);
+// serverIO.on('connection', (socket) => {
+//   console.log('Socket connection made', socket.id);
 
-    socket.on('message', (data) => {
-      console.log(`Message from client: ${data}`);
-    });
+//     socket.on('message', (data) => {
+//       console.log(`Message from client: ${data}`);
+//     });
 
-  });
+//   });
 
 
 app.get("/", (req, res) => {
